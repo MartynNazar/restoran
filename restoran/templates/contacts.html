@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакти - МартинБуд</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
+        header { background: #2c3e50; color: #fff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 16px; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 20px; }
+        .section { background: white; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .contact-form { display: flex; flex-direction: column; max-width: 400px; gap: 15px; margin-top: 15px; }
+        .contact-form input, .contact-form textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        .contact-form button { background: #e67e22; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>МартинБуд</h2>
+        <nav>
+            <a href="{% url 'home' %}">Головна</a>
+            <a href="{% url 'services' %}">Послуги</a>
+            <a href="{% url 'gallery' %}">Виконані роботи</a>
+            <a href="{% url 'contacts' %}">Контакти</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h1>Контакти</h1>
+            <p>Зв'яжіться з нами для консультації чи замовлення розрахунку:</p>
+            <p><strong>Телефон:</strong> +38 (0XX) XXX-XX-XX</p>
+            <p><strong>Email:</strong> info@martynbud.ua</p>
+
+            <h3 style="margin-top: 30px;">Залишити заявку</h3>
+            <div class="contact-form">
+                <input type="text" placeholder="Ваше ім'я">
+                <input type="text" placeholder="Номер телефону">
+                <textarea rows="4" placeholder="Опишіть коротко вашу задачу"></textarea>
+                <button type="submit">Надіслати</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

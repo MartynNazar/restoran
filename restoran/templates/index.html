@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МартинБуд - Ремонт та будівництво</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
+        header { background: #2c3e50; color: #fff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 16px; }
+        .hero { background: #34495e; color: white; text-align: center; padding: 4rem 2rem; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .btn { background: #e67e22; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 1rem; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 20px; }
+        .section { background: white; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .calc-box { background: #eef2f7; padding: 20px; border-radius: 6px; margin-top: 15px; }
+        .calc-box input { padding: 8px; width: 150px; margin-right: 10px; }
+        footer { text-align: center; padding: 1.5rem; background: #2c3e50; color: white; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>МартинБуд</h2>
+        <nav>
+            <a href="{% url 'home' %}">Головна</a>
+            <a href="{% url 'services' %}">Послуги</a>
+            <a href="{% url 'gallery' %}">Виконані роботи</a>
+            <a href="{% url 'contacts' %}">Контакти</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Якісний ремонт та будівництво з МартинБуд</h1>
+        <p>Працюємо на совість. Робимо швидко, якісно та надійно.</p>
+        <a href="{% url 'services' %}" class="btn">Переглянути послуги</a>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Про компанію «МартинБуд»</h2>
+            <p>Ми — команда професіоналів, яка виконує всі види будівельних та ремонтних робіт. Працюємо без посередників, гарантуємо якість на кожному етапі та дотримуємося термінів виконання.</p>
+        </div>
+
+        <div class="section">
+            <h2>Орієнтовний калькулятор вартості</h2>
+            <p>Введіть площу приміщення (в м²), щоб отримати попередній розрахунок:</p>
+            <div class="calc-box">
+                <input type="number" id="area" placeholder="Площа м²" value="50">
+                <button onclick="alert('Орієнтовна вартість ремонту складе приблизно ' + (document.getElementById('area').value * 3000) + ' грн')" style="padding: 8px 15px; background: #e67e22; color: white; border: none; border-radius: 4px; cursor: pointer;">Розрахувати</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 МартинБуд. Усі права захищено.</p>
+    </footer>
+
+</body>
+</html>

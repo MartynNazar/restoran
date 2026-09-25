@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Виконані роботи - МартинБуд</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
+        header { background: #2c3e50; color: #fff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 16px; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 20px; }
+        .section { background: white; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 1.5rem; }
+        .photo-card { background: #e2e8f0; height: 200px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #64748b; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>МартинБуд</h2>
+        <nav>
+            <a href="{% url 'home' %}">Головна</a>
+            <a href="{% url 'services' %}">Послуги</a>
+            <a href="{% url 'gallery' %}">Виконані роботи</a>
+            <a href="{% url 'contacts' %}">Контакти</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h1>Галерея виконаних робіт</h1>
+            <p>Тут згодом з'являться фотографії наших об'єктів, ремонтів квартир та будинків.</p>
+
+            <div class="gallery-grid">
+                <div class="photo-card">Фото об'єкта №1</div>
+                <div class="photo-card">Фото об'єкта №2</div>
+                <div class="photo-card">Фото об'єкта №3</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
