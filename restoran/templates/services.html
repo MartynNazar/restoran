@@ -256,7 +256,6 @@
             color: #888;
             font-size: 16px;
             margin-top: 40px;
-            display: none;
         }
         #toast-container {
             position: fixed;
@@ -302,8 +301,8 @@
     <h1>Каталог будівельних послуг</h1>
 
     <div class="search-filter-box">
-        <!-- Форма відправляє пошук на бекенд при натисканні «Знайти» або Enter -->
         <form method="GET" action="" class="search-form">
+            <!-- Зберігаємо вибрану категорію при пошуку -->
             {% if selected_category_id %}
                 <input type="hidden" name="category" value="{{ selected_category_id }}">
             {% endif %}
@@ -317,23 +316,29 @@
         </form>
 
         <div class="category-filters">
-            <a href="{% url 'services' %}" class="filter-btn {% if not selected_category_id %}active{% endif %}">Усі категорії</a>
+            <!-- Кнопка «Усі категорії» зберігає поточний пошуковий запит q -->
+            <a href="{% url 'services' %}{% if query %}?q={{ query }}{% endif %}" class="filter-btn {% if not selected_category_id %}active{% endif %}">
+                Усі категорії
+            </a>
             {% for cat in categories %}
-                <a href="?category={{ cat.id }}" class="filter-btn {% if selected_category_id == cat.id %}active{% endif %}">{{ cat.name }}</a>
+                <!-- Кнопки категорій зберігають поточний пошуковий запит q -->
+                <a href="?category={{ cat.id }}{% if query %}&q={{ query }}{% endif %}" class="filter-btn {% if selected_category_id == cat.id %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
             {% endfor %}
         </div>
 
         {% if query or selected_category_id %}
             <div>
-                <a href="{% url 'services' %}" class="reset-all">Скинути пошук</a>
+                <a href="{% url 'services' %}" class="reset-all">Скинути всі фільтри та пошук</a>
             </div>
         {% endif %}
     </div>
 
     {% if page_obj %}
-        <div class="cards-grid" id="cards-container">
+        <div class="cards-grid">
             {% for work in page_obj %}
-                <div class="card" data-title="{{ work.title|lower }}" data-description="{{ work.description|lower }}">
+                <div class="card">
                     <div class="card-image">
                         {% if work.image %}
                             <img src="{{ work.image.url }}" alt="{{ work.title }}">
@@ -356,8 +361,8 @@
             {% endfor %}
         </div>
 
-        <!-- Пагінація залишається працювати, коли карток багато -->
-        <div class="pagination" id="pagination-block">
+        <!-- ПАГІНАЦІЯ ІЗ ЗАХИСТОМ ТА ПЕРЕДАЧЕЮ ВСІХ GET-ПАРАМЕТРІВ -->
+        <div class="pagination">
             {% if page_obj.has_previous %}
                 <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">&laquo; Перша</a>
                 <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Попередня</a>
@@ -372,10 +377,8 @@
         </div>
 
     {% else %}
-        <p class="no-results" id="no-results-msg" style="display: block;">За вашим запитом нічого не знайдено.</p>
+        <p class="no-results">За вашим запитом нічого не знайдено.</p>
     {% endif %}
-
-    <p class="no-results" id="client-no-results-msg">За вашим запитом нічого не знайдено на цій сторінці.</p>
 </div>
 
 <script>
@@ -395,49 +398,17 @@
 
     const searchBox = document.getElementById('search-box');
     const autocompleteList = document.getElementById('autocomplete-results');
-    const cards = document.querySelectorAll('.card');
-    const clientNoResultsMsg = document.getElementById('client-no-results-msg');
-    const paginationBlock = document.getElementById('pagination-block');
 
-    // Живий фільтр на клієнті для карток, що вже завантажені на сторінку
     searchBox.addEventListener('input', function() {
-        const searchText = this.value.toLowerCase().trim();
-        let visibleCount = 0;
+        const query = this.value.trim();
 
-        cards.forEach(card => {
-            const title = card.getAttribute('data-title');
-            const description = card.getAttribute('data-description');
-
-            if (searchText === "" || title.includes(searchText) || description.includes(searchText)) {
-                card.style.display = 'flex';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        // Якщо введено текст, ховаємо пагінацію поточної сторінки щоб не плутати користувача,
-        // або показуємо повідомлення, якщо на цій сторінці нічого не підійшло
-        if (searchText !== "") {
-            if (paginationBlock) paginationBlock.style.display = 'none';
-            if (visibleCount === 0) {
-                clientNoResultsMsg.style.display = 'block';
-            } else {
-                clientNoResultsMsg.style.display = 'none';
-            }
-        } else {
-            if (paginationBlock) paginationBlock.style.display = 'flex';
-            clientNoResultsMsg.style.display = 'none';
-        }
-
-        // Автокомпліт (підказки зверху)
-        if (searchText.length < 1) {
+        if (query.length < 1) {
             autocompleteList.style.display = 'none';
             autocompleteList.innerHTML = '';
             return;
         }
 
-        fetch(`/autocomplete/?q=${encodeURIComponent(searchText)}`)
+        fetch(`/autocomplete/?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
                 autocompleteList.innerHTML = '';
@@ -450,7 +421,7 @@
                         div.addEventListener('click', function() {
                             searchBox.value = itemText;
                             autocompleteList.style.display = 'none';
-                            searchBox.form.submit(); // Повноцінний пошук через бекенд при кліку на підказку
+                            searchBox.form.submit();
                         });
                         autocompleteList.appendChild(div);
                     });

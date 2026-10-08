@@ -3,14 +3,27 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Q
 from .models import Category, WorkItem
-
+from .forms import ContactRequestForm
 
 def home_page(request):
     return render(request, 'home.html')
 
 
+
+
+
 def home_view(request):
-    return render(request, 'home.html')
+    success = False
+    if request.method == 'POST':
+        form = ContactRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+            form = ContactRequestForm()
+    else:
+        form = ContactRequestForm()
+
+    return render(request, 'restoran/home.html', {'form': form, 'success': success})
 
 
 def services_view(request):
@@ -59,3 +72,22 @@ def contacts_view(request):
 
 def register_view(request):
     return render(request, 'register.html')
+
+
+from django.shortcuts import render, redirect
+from .forms import ContactRequestForm
+
+
+def contact_view(request):
+    success = False
+    if request.method == 'POST':
+        form = ContactRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+            form = ContactRequestForm()
+    else:
+        form = ContactRequestForm()
+
+    # Зверни увагу на назву шаблону тут:
+    return render(request, 'contact.html', {'form': form, 'success': success})
