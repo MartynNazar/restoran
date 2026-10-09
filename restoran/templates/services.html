@@ -1,443 +1,227 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Наші послуги - МартинБуд</title>
+    <title>Каталог послуг — МартинБуд</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            background-color: #1a1d20;
+            color: #e5e7eb;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            padding: 20px;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .top-bar {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .back-btn {
-            display: inline-block;
-            text-decoration: none;
-            background-color: #34495e;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        .back-btn:hover {
-            background-color: #2c3e50;
-        }
-        .demo-toast-btn {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .demo-toast-btn:hover {
-            background-color: #27ae60;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
+        .navbar-custom {
+            background-color: #111315 !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.3);
         }
         .search-filter-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: #212529;
+            border: 1px solid rgba(27, 54, 93, 0.5);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             margin-bottom: 35px;
-            text-align: center;
-            position: relative;
-        }
-        .search-form {
-            display: inline-flex;
-            justify-content: center;
-            margin-bottom: 15px;
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-        }
-        .search-input-wrapper {
-            position: relative;
-            width: 100%;
         }
         .search-input {
+            background-color: #1a1d20;
+            border: 1px solid #4b5563;
+            color: #fff;
             padding: 12px 15px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 6px 0 0 6px;
-            outline: none;
-            font-size: 15px;
-            box-sizing: border-box;
+            border-radius: 8px 0 0 8px;
         }
-        .autocomplete-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            border-top: none;
-            border-radius: 0 0 6px 6px;
-            z-index: 99;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: left;
-            display: none;
-        }
-        .autocomplete-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            border-bottom: 1px solid #eee;
-        }
-        .autocomplete-item:last-child {
-            border-bottom: none;
-        }
-        .autocomplete-item:hover {
-            background-color: #f1f2f6;
+        .search-input:focus {
+            background-color: #1a1d20;
+            color: #fff;
+            border-color: #d97706;
+            box-shadow: none;
         }
         .search-btn {
-            padding: 12px 25px;
-            background-color: #3498db;
+            background-color: #d97706;
             color: white;
-            border: 1px solid #3498db;
-            border-radius: 0 6px 6px 0;
-            cursor: pointer;
-            font-size: 15px;
+            border: none;
+            padding: 12px 25px;
             font-weight: bold;
-            transition: background-color 0.2s;
+            border-radius: 0 8px 8px 0;
         }
         .search-btn:hover {
-            background-color: #2980b9;
-        }
-        .category-filters {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            background-color: #b45309;
+            color: white;
         }
         .filter-btn {
             text-decoration: none;
-            padding: 8px 16px;
-            background-color: #e9ecef;
-            color: #495057;
+            padding: 8px 18px;
+            background-color: #2d3748;
+            color: #cbd5e1;
             border-radius: 20px;
             font-size: 14px;
             font-weight: 600;
             transition: all 0.2s;
+            border: 1px solid transparent;
         }
         .filter-btn:hover, .filter-btn.active {
-            background-color: #34495e;
+            background-color: #d97706;
             color: white;
+            border-color: #d97706;
         }
-        .reset-all {
-            display: inline-block;
-            margin-top: 15px;
-            color: #e74c3c;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        .reset-all:hover {
-            text-decoration: underline;
-        }
-        .cards-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .card {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            width: 320px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        .card-custom {
+            background-color: #212529;
+            border: 1px solid rgba(27, 54, 93, 0.5);
+            border-radius: 12px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        .card:hover {
+        .card-custom:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        .card-image {
-            height: 160px;
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            font-size: 14px;
-            overflow: hidden;
-        }
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .card-content {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-        .card-title {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            color: #2c3e50;
-        }
-        .card-description {
-            margin: 0 0 15px 0;
-            font-size: 14px;
-            color: #666;
-            line-height: 1.5;
-        }
-        .card-footer {
-            border-top: 1px solid #eee;
-            padding-top: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-color: #d97706;
         }
         .card-price {
             font-weight: bold;
-            color: #e67e22;
-            font-size: 16px;
+            color: #d97706;
+            font-size: 18px;
         }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 40px;
-            margin-bottom: 20px;
+        /* Стилі для повноцінної пагінації за номерами */
+        .pagination .page-link {
+            background-color: #212529;
+            color: #e5e7eb;
+            border: 1px solid #4b5563;
         }
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 8px 14px;
-            background-color: white;
-            color: #2c3e50;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .pagination a:hover {
-            background-color: #3498db;
+        .pagination .page-link:hover {
+            background-color: #d97706;
+            border-color: #d97706;
             color: white;
-            border-color: #3498db;
         }
-        .pagination .current {
-            background-color: #34495e;
+        .pagination .page-item.active .page-link {
+            background-color: #d97706;
+            border-color: #d97706;
             color: white;
-            border-color: #34495e;
         }
-        .no-results {
-            text-align: center;
-            color: #888;
-            font-size: 16px;
-            margin-top: 40px;
+        footer {
+            background-color: #111315 !important;
+            border-top: 1px solid rgba(217, 119, 6, 0.2);
+            color: #9ca3af;
         }
-        #toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            background-color: #2c3e50;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            max-width: 300px;
-            border-left: 5px solid #3498db;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .toast.success { border-left-color: #2ecc71; }
-        .toast.error { border-left-color: #e74c3c; }
     </style>
 </head>
 <body>
 
-<div id="toast-container"></div>
-
-<div class="container">
-    <div class="top-bar">
-        <a href="{% url 'home' %}" class="back-btn">← На головну</a>
-        <button class="demo-toast-btn" onclick="showToast('Ласкаво просимо до МартинБуд!', 'success')">Тест повідомлення</button>
-    </div>
-
-    <h1>Каталог будівельних послуг</h1>
-
-    <div class="search-filter-box">
-        <form method="GET" action="" class="search-form">
-            <!-- Зберігаємо вибрану категорію при пошуку -->
-            {% if selected_category_id %}
-                <input type="hidden" name="category" value="{{ selected_category_id }}">
-            {% endif %}
-
-            <div class="search-input-wrapper">
-                <input type="text" id="search-box" name="q" value="{{ query }}" placeholder="Шукати послугу..." class="search-input" autocomplete="off">
-                <div id="autocomplete-results" class="autocomplete-list"></div>
-            </div>
-
-            <button type="submit" class="search-btn">Знайти</button>
-        </form>
-
-        <div class="category-filters">
-            <!-- Кнопка «Усі категорії» зберігає поточний пошуковий запит q -->
-            <a href="{% url 'services' %}{% if query %}?q={{ query }}{% endif %}" class="filter-btn {% if not selected_category_id %}active{% endif %}">
-                Усі категорії
+    <!-- Універсальна шапка з логотипом та кнопкою «Залишити заявку» -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
+                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+                <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
             </a>
-            {% for cat in categories %}
-                <!-- Кнопки категорій зберігають поточний пошуковий запит q -->
-                <a href="?category={{ cat.id }}{% if query %}&q={{ query }}{% endif %}" class="filter-btn {% if selected_category_id == cat.id %}active{% endif %}">
-                    {{ cat.name }}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto align-items-lg-center gap-2">
+                    <a class="nav-link text-warning" href="{% url 'services' %}">Послуги</a>
+                    <a class="nav-link" href="{% url 'calculator' %}">Калькулятор</a>
+                    <a class="nav-link" href="{% url 'gallery' %}">Галерея</a>
+                    <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
+                    <a class="nav-link" href="{% url 'register' %}">Вхід / Реєстрація</a>
+                    <a class="nav-link btn text-white px-3 ms-lg-2 fw-bold" style="background-color: #d97706; border: none;" href="{% url 'contact_us' %}">Залишити заявку</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4 fw-bold text-white" style="font-family: serif;">Каталог будівельних послуг</h1>
+
+        <div class="search-filter-box text-center">
+            <form method="GET" action="" class="d-inline-flex justify-content-center w-100 mb-3" style="max-width: 600px;">
+                {% if selected_category_id %}
+                    <input type="hidden" name="category" value="{{ selected_category_id }}">
+                {% endif %}
+                <input type="text" name="q" value="{{ query }}" placeholder="Шукати послугу..." class="form-control search-input shadow-none">
+                <button type="submit" class="search-btn">Знайти</button>
+            </form>
+
+            <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+                <a href="{% url 'services' %}{% if query %}?q={{ query }}{% endif %}" class="filter-btn {% if not selected_category_id %}active{% endif %}">
+                    Усі категорії
                 </a>
-            {% endfor %}
+                {% for cat in categories %}
+                    <a href="?category={{ cat.id }}{% if query %}&q={{ query }}{% endif %}" class="filter-btn {% if selected_category_id == cat.id %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                {% endfor %}
+            </div>
         </div>
 
-        {% if query or selected_category_id %}
-            <div>
-                <a href="{% url 'services' %}" class="reset-all">Скинути всі фільтри та пошук</a>
+        {% if page_obj %}
+            <div class="row g-4 justify-content-center">
+                {% for work in page_obj %}
+                    <div class="col-md-4">
+                        <div class="card card-custom h-100 shadow-sm">
+                            <div class="bg-dark text-secondary d-flex align-items-center justify-content-center" style="height: 180px;">
+                                {% if work.image %}
+                                    <img src="{{ work.image.url }}" alt="{{ work.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <span>МартинБуд</span>
+                                {% endif %}
+                            </div>
+                            <div class="card-body d-flex flex-column justify-content-between p-4">
+                                <div>
+                                    <h5 class="card-title fw-bold text-white mb-2">{{ work.title }}</h5>
+                                    <p class="card-text text-secondary small mb-3">{{ work.description }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
+                                    <span class="card-price">{{ work.price }}</span>
+                                    <a href="{% url 'contact_us' %}" class="btn btn-sm btn-outline-warning text-light border-warning">Замовити</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
+
+            <!-- ВИПРАВЛЕНА ПАГІНАЦІЯ: тепер є перехід на будь-яку сторінку -->
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">&laquo; Перша</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Попередня</a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Виведення номерів усіх доступних сторінок -->
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Наступна</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Остання &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% else %}
+            <p class="text-center text-secondary fs-5 mt-5">За вашим запитом нічого не знайдено.</p>
         {% endif %}
     </div>
 
-    {% if page_obj %}
-        <div class="cards-grid">
-            {% for work in page_obj %}
-                <div class="card">
-                    <div class="card-image">
-                        {% if work.image %}
-                            <img src="{{ work.image.url }}" alt="{{ work.title }}">
-                        {% else %}
-                            <span>Фото відсутнє</span>
-                        {% endif %}
-                    </div>
-
-                    <div class="card-content">
-                        <div>
-                            <h3 class="card-title">{{ work.title }}</h3>
-                            <p class="card-description">{{ work.description }}</p>
-                        </div>
-
-                        <div class="card-footer">
-                            <span class="card-price">{{ work.price }}</span>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">© 2026 «Мартин Буд». Усі права захищені.</p>
         </div>
-
-        <!-- ПАГІНАЦІЯ ІЗ ЗАХИСТОМ ТА ПЕРЕДАЧЕЮ ВСІХ GET-ПАРАМЕТРІВ -->
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">&laquo; Перша</a>
-                <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Попередня</a>
-            {% endif %}
-
-            <span class="current">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Наступна</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Остання &raquo;</a>
-            {% endif %}
-        </div>
-
-    {% else %}
-        <p class="no-results">За вашим запитом нічого не знайдено.</p>
-    {% endif %}
-</div>
-
-<script>
-    function showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerText = message;
-        container.appendChild(toast);
-
-        setTimeout(() => toast.classList.add('show'), 100);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-
-    const searchBox = document.getElementById('search-box');
-    const autocompleteList = document.getElementById('autocomplete-results');
-
-    searchBox.addEventListener('input', function() {
-        const query = this.value.trim();
-
-        if (query.length < 1) {
-            autocompleteList.style.display = 'none';
-            autocompleteList.innerHTML = '';
-            return;
-        }
-
-        fetch(`/autocomplete/?q=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-                autocompleteList.innerHTML = '';
-                if (data.length > 0) {
-                    autocompleteList.style.display = 'block';
-                    data.forEach(itemText => {
-                        const div = document.createElement('div');
-                        div.className = 'autocomplete-item';
-                        div.innerText = itemText;
-                        div.addEventListener('click', function() {
-                            searchBox.value = itemText;
-                            autocompleteList.style.display = 'none';
-                            searchBox.form.submit();
-                        });
-                        autocompleteList.appendChild(div);
-                    });
-                } else {
-                    autocompleteList.style.display = 'none';
-                }
-            })
-            .catch(err => console.error('Autocomplete error:', err));
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!searchBox.contains(e.target) && !autocompleteList.contains(e.target)) {
-            autocompleteList.style.display = 'none';
-        }
-    });
-</script>
-
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

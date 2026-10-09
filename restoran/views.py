@@ -8,24 +8,6 @@ from .forms import ContactRequestForm
 def home_page(request):
     return render(request, 'home.html')
 
-
-
-
-
-def home_view(request):
-    success = False
-    if request.method == 'POST':
-        form = ContactRequestForm(request.POST)
-        if form.is_valid():
-            form.save()
-            success = True
-            form = ContactRequestForm()
-    else:
-        form = ContactRequestForm()
-
-    return render(request, 'restoran/home.html', {'form': form, 'success': success})
-
-
 def services_view(request):
     query = request.GET.get('q', '').strip()
     selected_category_id = request.GET.get('category', '')
@@ -56,7 +38,6 @@ def services_view(request):
     }
     return render(request, 'services.html', context)
 
-
 def autocomplete_ajax(request):
     query = request.GET.get('q', '').strip()
     results = []
@@ -65,18 +46,17 @@ def autocomplete_ajax(request):
         results = [work.title for work in works]
     return JsonResponse(results, safe=False)
 
+def calculator_view(request):
+    return render(request, 'calculator.html')
+
+def gallery_view(request):
+    return render(request, 'gallery.html')
 
 def contacts_view(request):
     return render(request, 'contacts.html')
 
-
 def register_view(request):
     return render(request, 'register.html')
-
-
-from django.shortcuts import render, redirect
-from .forms import ContactRequestForm
-
 
 def contact_view(request):
     success = False
@@ -89,5 +69,4 @@ def contact_view(request):
     else:
         form = ContactRequestForm()
 
-    # Зверни увагу на назву шаблону тут:
     return render(request, 'contact.html', {'form': form, 'success': success})

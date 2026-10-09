@@ -1,66 +1,130 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>МартинБуд — Головна</title>
+    <title>МартинБуд — Елітне будівництво та ремонт</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1d20;
+            color: #e5e7eb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #111315 !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.3);
+        }
+        .hero-section {
+            background: linear-gradient(rgba(26, 29, 32, 0.85), rgba(26, 29, 32, 0.95)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') center/cover;
+            padding: 100px 0;
+            border-bottom: 2px solid #1b365d;
+        }
+        .card-custom {
+            background-color: #212529;
+            border: 1px solid rgba(27, 54, 93, 0.5);
+            color: #e5e7eb;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card-custom:hover {
+            transform: translateY(-5px);
+            border-color: #d97706;
+        }
+        .btn-copper {
+            background-color: #d97706;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+        }
+        .btn-copper:hover {
+            background-color: #b45309;
+            color: #fff;
+        }
+        .btn-outline-copper {
+            color: #d97706;
+            border-color: #d97706;
+            font-weight: 600;
+        }
+        .btn-outline-copper:hover {
+            background-color: #d97706;
+            color: #fff;
+        }
+        footer {
+            background-color: #111315 !important;
+            border-top: 1px solid rgba(217, 119, 6, 0.2);
+            color: #9ca3af;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Навігація / Шапка сайту -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
+    <!-- Навігація з логотипом та кнопкою «Залишити заявку» -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">МартинБуд</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{% url 'catalog' %}">Каталог послуг</a>
-                <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
-                <a class="nav-link" href="{% url 'contact_us' %}">Залишити заявку</a>
+            <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
+                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+                <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto align-items-lg-center gap-2">
+                    <a class="nav-link" href="{% url 'services' %}">Послуги</a>
+                    <a class="nav-link" href="{% url 'calculator' %}">Калькулятор</a>
+                    <a class="nav-link" href="{% url 'gallery' %}">Галерея</a>
+                    <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
+                    <a class="nav-link" href="{% url 'register' %}">Вхід / Реєстрація</a>
+                    <a class="nav-link btn btn-copper text-white px-3 ms-lg-2" href="{% url 'contact_us' %}">Залишити заявку</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Головний банер (Hero section) з трьома кнопками -->
-    <header class="bg-secondary text-white text-center py-5 shadow">
-        <div class="container py-5">
-            <h1 class="display-4 fw-bold">Будівельна компанія «МартинБуд»</h1>
-            <p class="lead mb-4">Якісний ремонт, будівництво та оздоблювальні роботи під ключ</p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="{% url 'catalog' %}" class="btn btn-primary btn-lg px-4 py-2 shadow">Переглянути послуги</a>
-                <a href="{% url 'contacts' %}" class="btn btn-outline-light btn-lg px-4 py-2 shadow">Контакти</a>
-                <a href="{% url 'contact_us' %}" class="btn btn-success btn-lg px-4 py-2 shadow">Залишити заявку</a>
+    <!-- Головний банер із 5 великими кнопками посередині -->
+    <header class="hero-section text-center text-white">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-3" style="font-family: serif;">Архітектура та будівництво преміум-класу</h1>
+            <p class="lead mb-5 text-light" style="max-width: 700px; margin: 0 auto;">Елітне будівництво котеджів, капітальний ремонт та ексклюзивні інтер'єри у Львові та області.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap" style="max-width: 900px; margin: 0 auto;">
+                <a href="{% url 'services' %}" class="btn btn-copper btn-lg px-4 py-3 shadow">Переглянути послуги</a>
+                <a href="{% url 'calculator' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Розрахувати кошторис</a>
+                <a href="{% url 'gallery' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Галерея робіт</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Вхід / Реєстрація</a>
+                <a href="{% url 'contacts' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Контакти</a>
             </div>
         </div>
     </header>
 
-    <!-- Секція «Чому нас обирають» -->
-    <section class="container my-5">
-        <h2 class="text-center mb-4 fw-bold text-dark">Чому обирають нас?</h2>
-        <div class="row text-center">
-            <div class="col-md-4 mb-3">
-                <div class="p-4 border rounded-3 shadow-sm h-100 bg-white">
-                    <h4 class="text-primary fw-bold">Досвід та якість</h4>
-                    <p class="text-muted">Виконуємо будівельні та ремонтні роботи будь-якої складності з гарантією.</p>
+    <!-- Переваги -->
+    <section class="container my-5 py-4">
+        <h2 class="text-center mb-5 fw-bold text-white" style="font-family: serif;">Стандарти компанії «Мартин Буд»</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-custom p-4 h-100 rounded-4 shadow-sm">
+                    <h4 class="fw-bold mb-3" style="color: #d97706;">Преміальна якість</h4>
+                    <p class="text-secondary mb-0">Використання передових будівельних технологій, елітних матеріалів та суворий контроль на кожному етапі.</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="p-4 border rounded-3 shadow-sm h-100 bg-white">
-                    <h4 class="text-primary fw-bold">Чесні ціни</h4>
-                    <p class="text-muted">Прозорий кошторис без прихованих платежів та переплат під час роботи.</p>
+            <div class="col-md-4">
+                <div class="card card-custom p-4 h-100 rounded-4 shadow-sm">
+                    <h4 class="fw-bold mb-3" style="color: #d97706;">Архітектурна точність</h4>
+                    <p class="text-secondary mb-0">Створення унікальних проєктів під ключ, що поєднують естетику, надійність та абсолютний комфорт.</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="p-4 border rounded-3 shadow-sm h-100 bg-white">
-                    <h4 class="text-primary fw-bold">Швидкість</h4>
-                    <p class="text-muted">Дотримуємося чітко узгоджених термінів здачі об'єктів.</p>
+            <div class="col-md-4">
+                <div class="card card-custom p-4 h-100 rounded-4 shadow-sm">
+                    <h4 class="fw-bold mb-3" style="color: #d97706;">Гарантія статусу</h4>
+                    <p class="text-secondary mb-0">Повна прозорість фінансових кошторисів, дотримання чітких термінів та преміальний сервіс.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Футер -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
+    <footer class="text-center py-4">
         <div class="container">
-            <p class="mb-0">© 2026 МартинБуд. Усі права захищені.</p>
+            <p class="mb-0">© 2026 «Мартин Буд». Усі права захищені. Архітектура та будівництво.</p>
         </div>
     </footer>
 

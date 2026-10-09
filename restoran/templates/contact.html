@@ -1,106 +1,97 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>Залишити заявку — МартинБуд</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #1a1d20; color: #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar-custom { background-color: #111315 !important; border-bottom: 1px solid rgba(217, 119, 6, 0.3); }
+        .card-custom { background-color: #212529; border: 1px solid rgba(27, 54, 93, 0.5); color: #e5e7eb; }
+        .form-control, .form-select { background-color: #1a1d20; border-color: #4b5563; color: #fff; }
+        .form-control:focus, .form-select:focus { background-color: #1a1d20; color: #fff; border-color: #d97706; box-shadow: none; }
+        footer { background-color: #111315 !important; border-top: 1px solid rgba(217, 119, 6, 0.2); color: #9ca3af; }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-    <!-- Навігація / Шапка -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">МартинБуд</a>
+            <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
+                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+                <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
+            </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{% url 'catalog' %}">Каталог послуг</a>
-                <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
+                <a class="nav-link text-white" href="{% url 'home' %}">← На головну</a>
             </div>
         </div>
     </nav>
 
-    <!-- Основний блок із формою заявки -->
     <div class="container my-5" style="max-width: 650px;">
-        <div class="card shadow-lg border-0 p-4 rounded-4 bg-white">
-            <h2 class="mb-3 text-center text-primary fw-bold">Залишити заявку у «МартинБуд»</h2>
-            <p class="text-muted text-center mb-4">Заповніть форму нижче, і наш менеджер зв'яжеться з вами найближчим часом.</p>
+        <div class="card card-custom shadow-lg p-4 rounded-4">
+            <h2 class="mb-3 text-center fw-bold" style="color: #d97706; font-family: serif;">Залишити заявку</h2>
+            <p class="text-secondary text-center mb-4">Заповніть форму, і наш фахівець зв'яжеться з вами.</p>
 
             <form method="POST">
                 {% csrf_token %}
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Прізвище, ім'я та по батькові *</label>
+                    <label class="form-label text-light fw-semibold">Прізвище, ім'я та по батькові *</label>
                     {{ form.full_name }}
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Номер телефону *</label>
+                    <label class="form-label text-light fw-semibold">Номер телефону *</label>
                     {{ form.phone }}
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Бажаний спосіб зв'язку</label>
+                    <label class="form-label text-light fw-semibold">Бажаний спосіб зв'язку</label>
                     {{ form.communication_method }}
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Бажана послуга (власними словами)</label>
+                    <label class="form-label text-light fw-semibold">Бажана послуга (власними словами)</label>
                     {{ form.service_text }}
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Населений пункт (місто або село) *</label>
+                    <label class="form-label text-light fw-semibold">Населений пункт *</label>
                     {{ form.city }}
                 </div>
-
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary">Тип об'єкта (будинок, квартира тощо) *</label>
+                    <label class="form-label text-light fw-semibold">Тип об'єкта *</label>
                     {{ form.object_type }}
                 </div>
-
                 <div class="mb-4">
-                    <label class="form-label fw-semibold text-secondary">Коментар / деталі</label>
+                    <label class="form-label text-light fw-semibold">Коментар / деталі</label>
                     {{ form.comment }}
                 </div>
 
-                <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm fs-5">Надіслати заявку</button>
+                <button type="submit" class="btn w-100 py-2 fw-bold fs-5 text-white shadow-sm" style="background-color: #d97706;">Надіслати заявку</button>
             </form>
 
             <div class="text-center mt-3">
-                <a href="{% url 'catalog' %}" class="text-decoration-none text-muted">← Повернутися до каталогу послуг</a>
+                <a href="{% url 'home' %}" class="text-secondary text-decoration-none">← Повернутися на головну</a>
             </div>
         </div>
     </div>
 
-    <!-- Спливаюче сповіщення (тоаст), яке з'являється ПІСЛЯ успішного відправлення -->
     {% if success %}
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-      <div id="successToast" class="toast align-items-center text-white bg-success border-0 shadow-lg show" role="alert" aria-live="assertive" aria-atomic="true">
+      <div id="successToast" class="toast align-items-center text-white bg-success border-0 show shadow-lg" role="alert">
         <div class="d-flex">
-          <div class="toast-body fs-6 p-3">
-            🎉 Дякуємо! Ваша заявка успішно надіслана. Ми зв'яжемося з вами найближчим часом!
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          <div class="toast-body p-3">🎉 Дякуємо! Ваша заявка успішно надіслана.</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
       </div>
     </div>
     {% endif %}
 
-    <!-- Футер -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <div class="container">
-            <p class="mb-0">© 2026 МартинБуд. Усі права захищені.</p>
-        </div>
+    <footer class="text-center py-4 mt-5">
+        <div class="container"><p class="mb-0">© 2026 «Мартин Буд».</p></div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Автоматичне спрацьовування та зникнення тоасту через 3 секунди, якщо є success
         document.addEventListener("DOMContentLoaded", function() {
             var toastEl = document.getElementById('successToast');
-            if (toastEl) {
-                var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-                toast.show();
-            }
+            if (toastEl) { new bootstrap.Toast(toastEl, { delay: 3000 }).show(); }
         });
     </script>
 </body>
