@@ -9,10 +9,29 @@
         body { background-color: #1a1d20; color: #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .navbar-custom { background-color: #111315 !important; border-bottom: 1px solid rgba(217, 119, 6, 0.3); }
         .card-custom { background-color: #212529; border: 1px solid rgba(27, 54, 93, 0.5); color: #e5e7eb; }
-        .form-control, .form-select { background-color: #1a1d20; border-color: #4b5563; color: #fff; }
-        .form-control:focus, .form-select:focus { background-color: #1a1d20; color: #fff; border-color: #d97706; box-shadow: none; }
+        .form-select, .form-control { background-color: #1a1d20; border-color: #4b5563; color: #fff; }
+        .form-select:focus, .form-control:focus { background-color: #1a1d20; color: #fff; border-color: #d97706; box-shadow: none; }
         .btn-copper { background-color: #d97706; color: #fff; font-weight: 600; border: none; }
         .btn-copper:hover { background-color: #b45309; color: #fff; }
+        .step-card { display: none; }
+        .step-card.active { display: block; }
+        .progress-bar-custom { background-color: #d97706; }
+        .option-btn {
+            background-color: #2a2e33;
+            border: 1px solid #4b5563;
+            color: #e5e7eb;
+            text-align: left;
+            padding: 12px 16px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover, .option-btn.selected {
+            border-color: #d97706;
+            background-color: rgba(217, 119, 6, 0.15);
+            color: #fff;
+        }
         footer { background-color: #111315 !important; border-top: 1px solid rgba(217, 119, 6, 0.2); color: #9ca3af; }
     </style>
 </head>
@@ -30,36 +49,119 @@
         </div>
     </nav>
 
-    <div class="container my-5" style="max-width: 650px;">
+    <div class="container my-5" style="max-width: 700px;">
         <div class="card card-custom shadow-lg p-4 rounded-4">
-            <h2 class="mb-3 text-center fw-bold" style="color: #d97706; font-family: serif;">Калькулятор кошторису</h2>
-            <p class="text-secondary text-center mb-4">Розрахуйте попередню вартість будівельних чи ремонтних робіт.</p>
+            <h2 class="mb-2 text-center fw-bold" style="color: #d97706; font-family: serif;">Калькулятор вартості робіт</h2>
+            <p class="text-secondary text-center mb-4">Дайте відповідь на 10 запитань для формування попереднього розрахунку по Львівській області.</p>
 
-            <form id="calcForm">
-                <div class="mb-3">
-                    <label class="form-label fw-semibold text-light">Тип робіт</label>
-                    <select id="workType" class="form-select">
-                        <option value="2500" class="bg-dark">Косметичний ремонт (від 2500 грн/м²)</option>
-                        <option value="4500" selected class="bg-dark">Капітальний ремонт (від 4500 грн/м²)</option>
-                        <option value="7000" class="bg-dark">Ремонт «Під ключ» з матеріалами (від 7000 грн/м²)</option>
-                        <option value="3500" class="bg-dark">Фасадні / зовнішні роботи (від 3500 грн/м²)</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label fw-semibold text-light">Площа приміщення (м²)</label>
-                    <input type="number" id="areaInput" class="form-control" value="50" min="1">
-                </div>
-
-                <button type="button" onclick="calculateCost()" class="btn btn-copper w-100 py-2 fs-5 shadow-sm">Розрахувати</button>
-            </form>
-
-            <div id="resultBox" class="alert mt-4 text-center fs-5 fw-bold d-none" style="background-color: #2d3748; color: #d97706; border: 1px solid #d97706;" role="alert">
-                Орієнтовна вартість: <span id="totalPrice">0</span> грн
+            <!-- Шкала прогресу -->
+            <div class="progress mb-4" style="height: 8px; background-color: #1a1d20;">
+                <div id="progressBar" class="progress-bar progress-bar-custom" role="progressbar" style="width: 10%;"></div>
             </div>
 
-            <div class="text-center mt-4">
-                <a href="{% url 'contact_us' %}" class="text-warning text-decoration-none fw-semibold">Замовити точний розрахунок у фахівця →</a>
+            <form id="quizForm">
+                <!-- Крок 1 -->
+                <div class="step-card active" data-step="1">
+                    <h5 class="fw-bold mb-3">1. Який тип об'єкта плануєте ремонтувати?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(1, 'object_type', 'apartment', 'Квартира')">🏢 Квартира</button>
+                    <button type="button" class="option-btn" onclick="selectOption(1, 'object_type', 'house', 'Приватний будинок / Котедж')">🏡 Приватний будинок / Котедж</button>
+                    <button type="button" class="option-btn" onclick="selectOption(1, 'object_type', 'commercial', 'Комерційне приміщення (офіс/магазин)')">🏬 Комерційне приміщення</button>
+                </div>
+
+                <!-- Крок 2 (Динамічний) -->
+                <div class="step-card" data-step="2">
+                    <h5 class="fw-bold mb-3" id="q2-title">2. Стан об'єкта?</h5>
+                    <div id="q2-options"></div>
+                </div>
+
+                <!-- Крок 3 -->
+                <div class="step-card" data-step="3">
+                    <h5 class="fw-bold mb-3">3. Вкажіть загальну площу приміщення (м²)</h5>
+                    <input type="number" id="areaInput" class="form-control mb-3 fs-5" value="60" min="10" max="1000">
+                    <button type="button" class="btn btn-copper w-100 py-2 fs-6" onclick="nextStep(3)">Продовжити →</button>
+                </div>
+
+                <!-- Крок 4 -->
+                <div class="step-card" data-step="4">
+                    <h5 class="fw-bold mb-3">4. Який обсяг і клас робіт необхідний?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(4, 'repair_class', 'cosmetic', 'Косметичний (освіжити оздоблення)')">🖌️ Косметичний ремонт</button>
+                    <button type="button" class="option-btn" onclick="selectOption(4, 'repair_class', 'capital', 'Капітальний (із заміною комунікацій)')">🔨 Капітальний ремонт</button>
+                    <button type="button" class="option-btn" onclick="selectOption(4, 'repair_class', 'turnkey', '«Під ключ» за індивідуальним дизайном')">💎 Преміум / «Під ключ»</button>
+                </div>
+
+                <!-- Крок 5 -->
+                <div class="step-card" data-step="5">
+                    <h5 class="fw-bold mb-3" id="q5-title">5. Стан інженерних мереж (електрика та сантехніка)?</h5>
+                    <div id="q5-options"></div>
+                </div>
+
+                <!-- Крок 6 -->
+                <div class="step-card" data-step="6">
+                    <h5 class="fw-bold mb-3">6. Які вирівнювальні та чорнові роботи потрібні?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(6, 'rough_work', 'full', 'Повне вирівнювання стін та стяжка підлоги')">🧱 Повний комплекс (стяжка + штукатурка)</button>
+                    <button type="button" class="option-btn" onclick="selectOption(6, 'rough_work', 'partial', 'Частковий ремонт та локальне шпаклювання')">🛠️ Часткове підготування стін</button>
+                    <button type="button" class="option-btn" onclick="selectOption(6, 'rough_work', 'minimal', 'Мінімальні роботи (поверхня готова)')">✨ Мінімальні чорнові роботи</button>
+                </div>
+
+                <!-- Крок 7 -->
+                <div class="step-card" data-step="7">
+                    <h5 class="fw-bold mb-3">7. Яке фінішне підлогове покриття планується?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(7, 'flooring', 'laminate', 'Ламінат / Лінолеум')">🪵 Ламінат або лінолеум</button>
+                    <button type="button" class="option-btn" onclick="selectOption(7, 'flooring', 'tile', 'Керамограніт / Плитка')">🧱 Керамограніт / Плитка</button>
+                    <button type="button" class="option-btn" onclick="selectOption(7, 'flooring', 'parquet', 'Паркет / Паркетна дошка')">🌳 Паркетна дошка / Масив</button>
+                </div>
+
+                <!-- Крок 8 -->
+                <div class="step-card" data-step="8">
+                    <h5 class="fw-bold mb-3" id="q8-title">8. Додаткові конструкції або фасад?</h5>
+                    <div id="q8-options"></div>
+                </div>
+
+                <!-- Крок 9 -->
+                <div class="step-card" data-step="9">
+                    <h5 class="fw-bold mb-3">9. Хто закуповує будівельні та чорнові матеріали?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(9, 'materials', 'our', '«МартинБуд» закуповує та доставляє всі матеріали')">🚚 Ваша команда (матеріали під ключ)</button>
+                    <button type="button" class="option-btn" onclick="selectOption(9, 'materials', 'client', 'Закуповую самостійно за вашим списком')">🛒 Закуповую самостійно</button>
+                    <button type="button" class="option-btn" onclick="selectOption(9, 'materials', 'mixed', 'Частково ваші матеріали, частково мої')">🤝 Комбінований варіант</button>
+                </div>
+
+                <!-- Крок 10 -->
+                <div class="step-card" data-step="10">
+                    <h5 class="fw-bold mb-3">10. Планові терміни початку робіт?</h5>
+                    <button type="button" class="option-btn" onclick="selectOption(10, 'urgency', 'urgent', 'Найближчим часом (протягом 1-2 тижнів)')">⚡ Готові розпочати терміново</button>
+                    <button type="button" class="option-btn" onclick="selectOption(10, 'urgency', 'standard', 'Протягом місяця')">📅 Протягом місяця</button>
+                    <button type="button" class="option-btn" onclick="selectOption(10, 'urgency', 'planning', 'Планую на майбутнє (через 2-3 місяці)')">⏳ Попереднє планування</button>
+                </div>
+            </form>
+
+            <!-- Блок Результату -->
+            <div id="resultBox" class="d-none mt-4 p-4 rounded-3" style="background-color: #282c34; border: 1px solid #d97706;">
+                <h4 class="text-center fw-bold text-white mb-3">Результат розрахунку</h4>
+                <div class="text-center mb-4">
+                    <span class="fs-6 text-secondary d-block">Орієнтовна вартість робіт та матеріалів:</span>
+                    <span id="totalPrice" class="display-6 fw-bold" style="color: #d97706;">0</span> <span class="fs-4 text-warning">грн</span>
+                </div>
+
+                <div class="p-3 mb-4 rounded" style="background-color: #1a1d20; font-size: 14px; color: #cbd5e1;">
+                    <h6 class="fw-bold text-warning mb-2">📋 Що враховано в розрахунок:</h6>
+                    <ul class="mb-0 ps-3">
+                        <li id="res-type" class="mb-1"></li>
+                        <li id="res-area" class="mb-1"></li>
+                        <li id="res-class" class="mb-1"></li>
+                        <li id="res-materials" class="mb-1"></li>
+                        <li>Професійний інструмент, виїзд майстрів та якісне виконання робіт.</li>
+                    </ul>
+                </div>
+
+                <div class="text-center gap-2 d-grid">
+                    <a href="{% url 'contact_us' %}" class="btn btn-warning py-2 fw-bold fs-6" style="background-color: #d97706; border: none; color: #fff;">Залишити заявку на ремонт →</a>
+                    <button type="button" class="btn btn-outline-secondary text-light btn-sm mt-2" onclick="restartQuiz()">🔄 Розрахувати заново</button>
+                </div>
+            </div>
+
+            <!-- Кнопка «Назад» -->
+            <div class="d-flex justify-content-between mt-4" id="nav-buttons">
+                <button type="button" id="backBtn" class="btn btn-outline-secondary btn-sm px-3 d-none" onclick="prevStep()">← Назад</button>
             </div>
         </div>
     </div>
@@ -67,14 +169,193 @@
     <footer class="text-center py-4 mt-5">
         <div class="container"><p class="mb-0">© 2026 «Мартин Буд».</p></div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function calculateCost() {
-            const rate = parseFloat(document.getElementById('workType').value);
-            const area = parseFloat(document.getElementById('areaInput').value);
-            if (isNaN(area) || area <= 0) { alert('Введіть коректну площу'); return; }
-            document.getElementById('totalPrice').innerText = (rate * area).toLocaleString('uk-UA');
+        let currentStep = 1;
+        const totalSteps = 10;
+        const answers = {};
+
+        function updateProgress() {
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+
+            if (currentStep > 1 && currentStep <= totalSteps) {
+                document.getElementById('backBtn').classList.remove('d-none');
+            } else {
+                document.getElementById('backBtn').classList.add('d-none');
+            }
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
+            const currentCard = document.querySelector(`.step-card[data-step="${step}"]`);
+            if (currentCard) currentCard.classList.add('active');
+            updateProgress();
+        }
+
+        function nextStep(step) {
+            if (step === 3) {
+                const area = parseFloat(document.getElementById('areaInput').value);
+                if (isNaN(area) || area < 5) {
+                    alert('Будь ласка, вкажіть коректну площу (не менше 5 м²)');
+                    return;
+                }
+                answers['area'] = area;
+            }
+
+            if (step === 1) setupStep2();
+            if (step === 4) setupStep5();
+            if (step === 7) setupStep8();
+
+            currentStep++;
+            showStep(currentStep);
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function selectOption(step, key, value, label) {
+            answers[key] = { value: value, label: label };
+
+            if (step < totalSteps) {
+                nextStep(step);
+            } else {
+                calculateFinalCost();
+            }
+        }
+
+        function setupStep2() {
+            const objType = answers['object_type'] ? answers['object_type'].value : 'apartment';
+            const title = document.getElementById('q2-title');
+            const box = document.getElementById('q2-options');
+
+            if (objType === 'house') {
+                title.innerText = '2. Який стан вашого будинку / котеджу?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'new_shell', 'Новобудова (коробка без оздоблення)')">🏗️ Новобудова (коробка без оздоблення)</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'old_house', 'Жилий будинок (потрібен капітальний ремонт)')">🏚️ Жилий будинок (старий фонд)</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'reconstruction', 'Реконструкція / добудова поверху')">📐 Реконструкція / добудова</button>
+                `;
+            } else if (objType === 'commercial') {
+                title.innerText = '2. Яке саме комерційне приміщення?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'office', 'Офіс / кабінети')">🏢 Офісне приміщення</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'retail', 'Торгова точка / магазин / кав\\'ярня')">☕ Магазин / кав'ярня / ресторан</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'warehouse', 'Склад / виробництво')">📦 Склад або майстерня</button>
+                `;
+            } else {
+                title.innerText = '2. Тип будинку та стан квартири?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'new_building', 'Новобудова (сирець від забудовника)')">🔑 Новобудова (сирець)</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'secondary', 'Вторинний ринок (чешка/хрущовка/панель)')">🏢 Вторинний ринок</button>
+                    <button type="button" class="option-btn" onclick="selectOption(2, 'condition', 'austrian', 'Старий фонд (австрійський / польський будинок)')">🏛️ Старий фонд (високі стелі)</button>
+                `;
+            }
+        }
+
+        function setupStep5() {
+            const objType = answers['object_type'] ? answers['object_type'].value : 'apartment';
+            const title = document.getElementById('q5-title');
+            const box = document.getElementById('q5-options');
+
+            if (objType === 'house') {
+                title.innerText = '5. Електрика, опалення та водопостачання в будинку?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'full_house', 'Повний монтаж розводки, опалення, котельні та сантехніки')">🔥 Повний монтаж з опаленням і котельнею</button>
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'partial', 'Часткова заміна або розводка тільки по поверху')">⚡ Частковий монтаж мереж</button>
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'ready', 'Всі комунікації вже розведені')">✅ Всі комунікації в нормі</button>
+                `;
+            } else {
+                title.innerText = '5. Потреба в монтажі електрики та сантехніки?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'full_flat', 'Повний монтаж «з нуля» (новий щиток, сантехніка, точки)')">⚡ Повний розрахунок та розводка «з нуля»</button>
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'modernize', 'Додавання додаткових розеток та перенос сантехніки')">🔌 Модернізація та додавання точок</button>
+                    <button type="button" class="option-btn" onclick="selectOption(5, 'engineering', 'ready', 'Мінімальні зміни, мережі залишаються')">👌 Без капітальних змін</button>
+                `;
+            }
+        }
+
+        function setupStep8() {
+            const objType = answers['object_type'] ? answers['object_type'].value : 'apartment';
+            const title = document.getElementById('q8-title');
+            const box = document.getElementById('q8-options');
+
+            if (objType === 'house') {
+                title.innerText = '8. Фасадні або покрівельні роботи необхідні?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'facade', 'Утеплення та оздоблення фасаду будинку')">🏡 Утеплення та фасад</button>
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'roof', 'Ремонт або утеплення покрівлі')">🛖 Покрівельні роботи</button>
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'interior_only', 'Тільки внутрішнє оздоблення')">🚪 Тільки внутрішні роботи</button>
+                `;
+            } else {
+                title.innerText = '8. Монтаж гіпсокартону або багаторівневих стель?';
+                box.innerHTML = `
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'drywall', 'Перепланування, арки, перегородки з гіпсокартону')">🧱 Перегородки та конструкції</button>
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'ceilings', 'Багаторівневі гіпсокартонні / підвісні стелі')">✨ Складні стелі з підсвіткою</button>
+                    <button type="button" class="option-btn" onclick="selectOption(8, 'extra', 'none', 'Стандартні прямі стелі та стіни')">⚪ Стандартні рівні поверхні</button>
+                `;
+            }
+        }
+
+        function calculateFinalCost() {
+            document.getElementById('quizForm').classList.add('d-none');
+            document.getElementById('nav-buttons').classList.add('d-none');
+            document.getElementById('progressBar').parentElement.classList.add('d-none');
+
+            const area = answers['area'] || 50;
+
+            let baseRate = 3200;
+
+            if (answers['object_type']?.value === 'house') baseRate += 800;
+            if (answers['object_type']?.value === 'commercial') baseRate += 300;
+
+            if (answers['repair_class']?.value === 'capital') baseRate += 1800;
+            if (answers['repair_class']?.value === 'turnkey') baseRate += 3500;
+
+            if (answers['engineering']?.value === 'full_house' || answers['engineering']?.value === 'full_flat') baseRate += 1200;
+
+            if (answers['rough_work']?.value === 'full') baseRate += 900;
+
+            if (answers['flooring']?.value === 'tile') baseRate += 400;
+            if (answers['flooring']?.value === 'parquet') baseRate += 700;
+
+            let materialMultiplier = 1.0;
+            if (answers['materials']?.value === 'our') {
+                materialMultiplier = 1.65;
+            } else if (answers['materials']?.value === 'mixed') {
+                materialMultiplier = 1.35;
+            }
+
+            let totalCost = (baseRate * area) * materialMultiplier;
+
+            const profitMargin = 1.20;
+            let finalPrice = Math.round(totalCost * profitMargin);
+
+            finalPrice = Math.ceil(finalPrice / 500) * 500;
+
+            document.getElementById('totalPrice').innerText = finalPrice.toLocaleString('uk-UA');
+
+            document.getElementById('res-type').innerText = `Тип об'єкта: ${answers['object_type']?.label || 'Приміщення'} (${answers['condition']?.label || 'Стандарт'})`;
+            document.getElementById('res-area').innerText = `Загальна площа: ${area} м²`;
+            document.getElementById('res-class').innerText = `Класифікація робіт: ${answers['repair_class']?.label || 'Комплексний ремонт'}`;
+            document.getElementById('res-materials').innerText = `Закупівля матеріалів: ${answers['materials']?.label || 'За домовленістю'}`;
+
             document.getElementById('resultBox').classList.remove('d-none');
+        }
+
+        function restartQuiz() {
+            currentStep = 1;
+            document.getElementById('quizForm').reset();
+            document.getElementById('quizForm').classList.remove('d-none');
+            document.getElementById('nav-buttons').classList.remove('d-none');
+            document.getElementById('progressBar').parentElement.classList.remove('d-none');
+            document.getElementById('resultBox').classList.add('d-none');
+            showStep(1);
         }
     </script>
 </body>

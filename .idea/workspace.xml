@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="51b9b55d-a4d5-4b19-bd91-17266d7c080c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/media/interier.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/montazh.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/remont.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restoran/templates/faq.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restoran/templates/reviews.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/restoran.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/restoran.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/building/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/building/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/building/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/building/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/calculator.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/calculator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/contacts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/gallery.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/gallery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/templates/services.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/services.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MartynNazar&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MartynNazar/restoran.git&quot;,
+    &quot;accountId&quot;: &quot;6bc8f533-aa67-4fd2-a382-fcd6a50c470c&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3JBu2oM8zkNJkxP760HT07P4tpJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Acer/Documents/GitHub/restoran/media&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\Documents\GitHub\restoran\media" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\Documents\GitHub\restoran" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="51b9b55d-a4d5-4b19-bd91-17266d7c080c" name="Changes" comment="" />
+      <created>1789146581867</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789146581867</updated>
+    </task>
+    <servers />
+  </component>
+</project>

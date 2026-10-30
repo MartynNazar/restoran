@@ -6,9 +6,9 @@
     <title>Галерея робіт — МартинБуд</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #1a1d20; color: #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #1a1d20 !important; color: #e5e7eb !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .navbar-custom { background-color: #111315 !important; border-bottom: 1px solid rgba(217, 119, 6, 0.3); }
-        .card-custom { background-color: #212529; border: 1px solid rgba(27, 54, 93, 0.5); color: #e5e7eb; }
+        .card-custom { background-color: #212529 !important; border: 1px solid rgba(27, 54, 93, 0.5) !important; color: #e5e7eb !important; }
         footer { background-color: #111315 !important; border-top: 1px solid rgba(217, 119, 6, 0.2); color: #9ca3af; }
     </style>
 </head>
@@ -17,7 +17,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
-                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
                 <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
             </a>
             <div class="navbar-nav ms-auto">
@@ -33,33 +32,30 @@
         </div>
 
         <div class="row g-4">
+            <!-- Об'єкт 1 -->
             <div class="col-md-4">
-                <div class="card card-custom h-100 shadow-sm border-0">
-                    <div class="bg-dark text-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>Об'єкт №1</span>
-                    </div>
+                <div class="card card-custom h-100 shadow-sm">
+                    <img src="/media/remont.jpg" class="card-img-top" alt="Капітальний ремонт будинку" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold text-white">Капітальний ремонт будинку</h5>
                         <p class="card-text text-secondary small">Повний цикл робіт від планування до фінішного оздоблення.</p>
                     </div>
                 </div>
             </div>
+            <!-- Об'єкт 2 -->
             <div class="col-md-4">
-                <div class="card card-custom h-100 shadow-sm border-0">
-                    <div class="bg-dark text-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>Об'єкт №2</span>
-                    </div>
+                <div class="card card-custom h-100 shadow-sm">
+                    <img src="/media/montazh.jpg" class="card-img-top" alt="Монтаж фасаду" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold text-white">Монтаж фасаду</h5>
                         <p class="card-text text-secondary small">Утеплення та сучасний екстер'єр котеджу.</p>
                     </div>
                 </div>
             </div>
+            <!-- Об'єкт 3 -->
             <div class="col-md-4">
-                <div class="card card-custom h-100 shadow-sm border-0">
-                    <div class="bg-dark text-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>Об'єкт №3</span>
-                    </div>
+                <div class="card card-custom h-100 shadow-sm">
+                    <img src="/media/interier.jpg" class="card-img-top" alt="Дизайнерський інтер'єр" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold text-white">Дизайнерський інтер'єр</h5>
                         <p class="card-text text-secondary small">Ремонт квартири «під ключ» за індивідуальним проєктом.</p>

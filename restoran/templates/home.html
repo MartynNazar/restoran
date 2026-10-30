@@ -17,7 +17,7 @@
         }
         .hero-section {
             background: linear-gradient(rgba(26, 29, 32, 0.85), rgba(26, 29, 32, 0.95)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') center/cover;
-            padding: 100px 0;
+            padding: 90px 0;
             border-bottom: 2px solid #1b365d;
         }
         .card-custom {
@@ -58,7 +58,7 @@
 </head>
 <body>
 
-    <!-- Навігація з логотипом та кнопкою «Залишити заявку» -->
+    <!-- Навігація -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
@@ -73,24 +73,28 @@
                     <a class="nav-link" href="{% url 'services' %}">Послуги</a>
                     <a class="nav-link" href="{% url 'calculator' %}">Калькулятор</a>
                     <a class="nav-link" href="{% url 'gallery' %}">Галерея</a>
+                    <a class="nav-link" href="{% url 'reviews' %}">Відгуки</a>
+                    <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
                     <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
-                    <a class="nav-link" href="{% url 'register' %}">Вхід / Реєстрація</a>
                     <a class="nav-link btn btn-copper text-white px-3 ms-lg-2" href="{% url 'contact_us' %}">Залишити заявку</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Головний банер із 5 великими кнопками посередині -->
+    <!-- Головний банер із кнопками посередині -->
     <header class="hero-section text-center text-white">
         <div class="container">
             <h1 class="display-3 fw-bold mb-3" style="font-family: serif;">Архітектура та будівництво преміум-класу</h1>
-            <p class="lead mb-5 text-light" style="max-width: 700px; margin: 0 auto;">Елітне будівництво котеджів, капітальний ремонт та ексклюзивні інтер'єри у Львові та області.</p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap" style="max-width: 900px; margin: 0 auto;">
-                <a href="{% url 'services' %}" class="btn btn-copper btn-lg px-4 py-3 shadow">Переглянути послуги</a>
-                <a href="{% url 'calculator' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Розрахувати кошторис</a>
-                <a href="{% url 'gallery' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Галерея робіт</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Вхід / Реєстрація</a>
+            <p class="lead mb-4 text-light" style="max-width: 700px; margin: 0 auto;">Елітне будівництво котеджів, капітальний ремонт та ексклюзивні інтер'єри у Львові та області.</p>
+
+            <!-- Кнопки по центру банера -->
+            <div class="d-flex justify-content-center gap-3 flex-wrap" style="max-width: 1000px; margin: 0 auto;">
+                <a href="{% url 'services' %}" class="btn btn-copper btn-lg px-4 py-3 shadow">Послуги</a>
+                <a href="{% url 'calculator' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Калькулятор</a>
+                <a href="{% url 'gallery' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Галерея</a>
+                <a href="{% url 'reviews' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Відгуки</a>
+                <a href="{% url 'faq' %}" class="btn btn-outline-copper btn-lg px-4 py-3 shadow">Часті запитання</a>
                 <a href="{% url 'contacts' %}" class="btn btn-outline-light btn-lg px-4 py-3 shadow">Контакти</a>
             </div>
         </div>
@@ -115,7 +119,7 @@
             <div class="col-md-4">
                 <div class="card card-custom p-4 h-100 rounded-4 shadow-sm">
                     <h4 class="fw-bold mb-3" style="color: #d97706;">Гарантія статусу</h4>
-                    <p class="text-secondary mb-0">Повна прозорість фінансових кошторисів, дотримання чітких термінів та преміальний сервіс.</p>
+                    <p class="text-secondary mb-0">Повна прозорість у розрахунках, дотримання чітких термінів та преміальний сервіс.</p>
                 </div>
             </div>
         </div>

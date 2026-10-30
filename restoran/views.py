@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Q
 from .models import Category, WorkItem
 from .forms import ContactRequestForm
+from .models import Review
 
 def home_page(request):
     return render(request, 'home.html')
@@ -56,7 +57,30 @@ def contacts_view(request):
     return render(request, 'contacts.html')
 
 def register_view(request):
-    return render(request, 'register.html')
+    return render(request, 'reviews.html')
+
+
+def reviews_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        rating = request.POST.get('rating', 5)
+        text = request.POST.get('text')
+        object_info = request.POST.get('object_info', '')
+
+        if name and text:
+            Review.objects.create(
+                name=name,
+                rating=int(rating),
+                text=text,
+                object_info=object_info
+            )
+            return redirect('reviews')
+
+    reviews = Review.objects.all()
+    return render(request, 'reviews.html', {'reviews': reviews})
+
+def faq_view(request):
+    return render(request, 'faq.html')
 
 def contact_view(request):
     success = False

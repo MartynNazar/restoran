@@ -44,3 +44,18 @@ class ContactRequest(models.Model):
 
     def __str__(self):
         return f"Заявка від {self.full_name} ({self.phone}) - {self.city}"
+
+class Review(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Ім'я замовника")
+    rating = models.IntegerField(default=5, verbose_name="Оцінка (1-5)")
+    text = models.TextField(verbose_name="Текст відгуку")
+    object_info = models.CharField(max_length=150, blank=True, null=True, verbose_name="Об'єкт (наприклад, Квартира 60 м²)")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата додавання")
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Відгук"
+        verbose_name_plural = "Відгуки"
+
+    def __str__(self):
+        return f"{self.name} ({self.rating}★)"

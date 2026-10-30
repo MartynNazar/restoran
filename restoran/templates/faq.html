@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Часті запитання — МартинБуд</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #1a1d20; color: #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar-custom { background-color: #111315 !important; border-bottom: 1px solid rgba(217, 119, 6, 0.3); }
+        .card-custom { background-color: #212529; border: 1px solid rgba(27, 54, 93, 0.5); color: #e5e7eb; }
+        footer { background-color: #111315 !important; border-top: 1px solid rgba(217, 119, 6, 0.2); color: #9ca3af; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
+                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+                <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
+            </a>
+            <div class="navbar-nav ms-auto align-items-center gap-2">
+                <a class="nav-link text-white fw-bold me-2" href="{% url 'home' %}">← На головну</a>
+                <a class="nav-link" href="{% url 'services' %}">Послуги</a>
+                <a class="nav-link" href="{% url 'calculator' %}">Калькулятор</a>
+                <a class="nav-link" href="{% url 'gallery' %}">Галерея</a>
+                <a class="nav-link" href="{% url 'reviews' %}">Відгуки</a>
+                <a class="nav-link text-warning" href="{% url 'faq' %}">Часті запитання</a>
+                <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
+                <a class="nav-link btn text-white px-3 ms-2 fw-bold" style="background-color: #d97706; border: none;" href="{% url 'contact_us' %}">Залишити заявку</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5" style="max-width: 800px;">
+        <h1 class="text-center mb-4 fw-bold text-white" style="font-family: serif;">Часті запитання та відповіді</h1>
+        <p class="text-secondary text-center mb-5">Усе, що найчастіше запитують клієнти перед початком робіт.</p>
+
+        <div class="accordion" id="faqAccordion">
+            <div class="card card-custom mb-3 rounded-3 overflow-hidden border-secondary">
+                <div class="card-header bg-dark text-white fw-bold py-3">
+                    📌 Як відбувається оплата за виконані роботи?
+                </div>
+                <div class="card-body bg-dark text-secondary">
+                    Оплата розбивається на зручні етапи (поетапно по завершенню конкретних обсягів робіт). Ви платите тільки за реально виконаний етап.
+                </div>
+            </div>
+
+            <div class="card card-custom mb-3 rounded-3 overflow-hidden border-secondary">
+                <div class="card-header bg-dark text-white fw-bold py-3">
+                    📌 Хто купує та доставляє будівельні матеріали?
+                </div>
+                <div class="card-body bg-dark text-secondary">
+                    Матеріали можемо купувати ми повністю «під ключ» або ви можете купувати їх самостійно за нашим списком.
+                </div>
+            </div>
+
+            <div class="card card-custom mb-3 rounded-3 overflow-hidden border-secondary">
+                <div class="card-header bg-dark text-white fw-bold py-3">
+                    📌 Скільки в середньому триває ремонт квартири чи будинку?
+                </div>
+                <div class="card-body bg-dark text-secondary">
+                    Терміни залежать від обсягу. Косметичний ремонт триває від 3-4 тижнів, а капітальний чи ремонт під ключ — від 2 до 4 місяців.
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'contact_us' %}" class="btn btn-warning px-4 py-2 fw-bold text-white" style="background-color: #d97706; border: none;">Залишити заявку</a>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 mt-5">
+        <div class="container"><p class="mb-0">© 2026 «Мартин Буд».</p></div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
