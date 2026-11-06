@@ -8,7 +8,7 @@ class Category(models.Model):
         return self.name
 
 
-class WorkItem(models.Model):
+class Service(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категорія")
     title = models.CharField(max_length=200, verbose_name="Назва роботи (підкатегорія)")
     description = models.TextField(verbose_name="Детальний опис роботи")

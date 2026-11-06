@@ -5,25 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51b9b55d-a4d5-4b19-bd91-17266d7c080c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/interier.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/montazh.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/remont.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restoran/templates/faq.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restoran/templates/reviews.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/restoran.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/restoran.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/building/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/building/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restoran/templates/service_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/building/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/building/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/мартинбуд логотип.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/martynbud.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/мартинбуд логотип2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restoran/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restoran/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/calculator.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/calculator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/contacts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/gallery.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/gallery.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/restoran/templates/services.html" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/templates/services.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/restoran/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/restoran/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>

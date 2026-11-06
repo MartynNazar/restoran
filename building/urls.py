@@ -8,7 +8,7 @@ from restoran.views import (
     home_page,
     services_view,
     contacts_view,
-    autocomplete_ajax, gallery_view, calculator_view, reviews_view, faq_view
+    autocomplete_ajax, gallery_view, calculator_view, reviews_view, faq_view, service_detail_view
 )
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     path('calculator/', calculator_view, name='calculator'),
     path('gallery/', gallery_view, name='gallery'),
     path('reviews/', reviews_view, name='reviews'),
+    path('services/<slug:slug>/', service_detail_view, name='service_detail'),
     path('faq/', faq_view, name='faq'),
 ]
 

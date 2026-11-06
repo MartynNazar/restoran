@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог послуг — МартинБуд</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1d20;
+            color: #e5e7eb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: #111315 !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.3);
+        }
+        .search-filter-box {
+            background: #212529;
+            border: 1px solid rgba(27, 54, 93, 0.5);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 35px;
+        }
+        .search-input {
+            background-color: #1a1d20;
+            border: 1px solid #4b5563;
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 8px 0 0 8px;
+        }
+        .search-input:focus {
+            background-color: #1a1d20;
+            color: #fff;
+            border-color: #d97706;
+            box-shadow: none;
+        }
+        .search-btn {
+            background-color: #d97706;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            border-radius: 0 8px 8px 0;
+        }
+        .search-btn:hover {
+            background-color: #b45309;
+            color: white;
+        }
+        .filter-btn {
+            text-decoration: none;
+            padding: 8px 18px;
+            background-color: #2d3748;
+            color: #cbd5e1;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #d97706;
+            color: white;
+            border-color: #d97706;
+        }
+        .card-custom {
+            background-color: #212529;
+            border: 1px solid rgba(27, 54, 93, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .card-custom:hover {
+            transform: translateY(-5px);
+            border-color: #d97706;
+        }
+        .card-price {
+            font-weight: bold;
+            color: #d97706;
+            font-size: 18px;
+        }
+        .pagination .page-link {
+            background-color: #212529;
+            color: #e5e7eb;
+            border: 1px solid #4b5563;
+        }
+        .pagination .page-link:hover {
+            background-color: #d97706;
+            border-color: #d97706;
+            color: white;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #d97706;
+            border-color: #d97706;
+            color: white;
+        }
+        footer {
+            background-color: #111315 !important;
+            border-top: 1px solid rgba(217, 119, 6, 0.2);
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навігація -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-white text-decoration-none fw-bold" href="{% url 'home' %}">
+                <img src="{{ MEDIA_URL }}мартинбуд логотип.png" alt="МартинБуд" style="height: 38px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+                <span>МАРТИН<span style="color: #d97706;">БУД</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto align-items-lg-center gap-2">
+                    <a class="nav-link text-white fw-bold me-2" href="{% url 'home' %}">← На головну</a>
+                    <a class="nav-link text-warning" href="{% url 'services' %}">Послуги</a>
+                    <a class="nav-link" href="{% url 'calculator' %}">Калькулятор</a>
+                    <a class="nav-link" href="{% url 'gallery' %}">Галерея</a>
+                    <a class="nav-link" href="{% url 'reviews' %}">Відгуки</a>
+                    <a class="nav-link" href="{% url 'faq' %}">Часті запитання</a>
+                    <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
+                    <a class="nav-link btn text-white px-3 ms-2 fw-bold" style="background-color: #d97706; border: none;" href="{% url 'contact_us' %}">Залишити заявку</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4 fw-bold text-white" style="font-family: serif;">Каталог будівельних послуг</h1>
+
+        <div class="search-filter-box text-center">
+            <form method="GET" action="" class="d-inline-flex justify-content-center w-100 mb-3" style="max-width: 600px;">
+                {% if selected_category_id %}
+                    <input type="hidden" name="category" value="{{ selected_category_id }}">
+                {% endif %}
+                <input type="text" name="q" value="{{ query }}" placeholder="Шукати послугу..." class="form-control search-input shadow-none">
+                <button type="submit" class="search-btn">Знайти</button>
+            </form>
+
+            <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+                <a href="{% url 'services' %}{% if query %}?q={{ query }}{% endif %}" class="filter-btn {% if not selected_category_id %}active{% endif %}">
+                    Усі категорії
+                </a>
+                {% for cat in categories %}
+                    <a href="?category={{ cat.id }}{% if query %}&q={{ query }}{% endif %}" class="filter-btn {% if selected_category_id == cat.id %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if page_obj %}
+            <div class="row g-4 justify-content-center">
+                {% for work in page_obj %}
+                    <div class="col-md-4">
+                        <div class="card card-custom h-100 shadow-sm">
+                            <a href="{% url 'service_detail' slug=work.slug %}" class="text-decoration-none">
+                                <div class="bg-dark text-secondary d-flex align-items-center justify-content-center overflow-hidden" style="height: 200px;">
+                                    {% if work.image %}
+                                        <img src="{{ work.image.url }}" alt="{{ work.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <span class="text-secondary fw-bold">МартинБуд</span>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div class="card-body d-flex flex-column justify-content-between p-4">
+                                <div>
+                                    <a href="{% url 'service_detail' slug=work.slug %}" class="text-decoration-none">
+                                        <h5 class="card-title fw-bold text-white mb-2">{{ work.title }}</h5>
+                                    </a>
+                                    <p class="card-text text-secondary small mb-3">{{ work.short_description|default:work.description }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top border-secondary">
+                                    <span class="card-price">{{ work.price }}</span>
+                                    <a href="{% url 'service_detail' slug=work.slug %}" class="btn btn-sm btn-outline-warning text-light border-warning">Детальніше</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">&laquo; Перша</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Попередня</a>
+                        </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Наступна</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if selected_category_id %}&category={{ selected_category_id }}{% endif %}">Остання &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% else %}
+            <p class="text-center text-secondary fs-5 mt-5">За вашим запитом нічого не знайдено.</p>
+        {% endif %}
+    </div>
+
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">© 2026 «Мартин Буд». Усі права захищені.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
